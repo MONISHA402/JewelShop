@@ -1,0 +1,48 @@
+{% extends 'shop/base.html' %}
+{% block title %}Help & FAQ | Jewel Store{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold text-center mb-4">Help & FAQs</h2>
+
+    <div class="accordion shadow-sm" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    How do I place an order?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Browse our collection, add items to your cart, and proceed to checkout using Razorpay for secure payments.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    Can I track my order?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes! Once shipped, you'll receive a tracking link via email.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    What if I want to return an item?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    You can request a return within 7 days of delivery. Please contact support for details.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Order #{{ order.id }} Details | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold text-center mb-4">🧾 Order #{{ order.id }} Details</h2>
+
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-dark text-light fw-bold">Items</div>
+                <div class="card-body">
+                    {% for item in items %}
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                            <div class="d-flex align-items-center">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" class="me-3 rounded" width="60">
+                                {% endif %}
+                                <div>
+                                    <p class="fw-semibold mb-0">{{ item.product.name }}</p>
+                                    <small class="text-muted">Qty: {{ item.quantity }}</small>
+                                </div>
+                            </div>
+                            <p class="fw-bold text-primary mb-0">₹{{ item.get_subtotal }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="card-footer bg-light">
+                    <p class="fw-bold mb-0 text-end">Total: ₹{{ order.total_amount }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-light fw-bold">Payment Details</div>
+                <div class="card-body">
+                    <p><strong>Status:</strong>
+                        {% if order.is_paid %}
+                            <span class="badge bg-success">Paid</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </p>
+                    <p><strong>Razorpay Order ID:</strong><br>{{ order.razorpay_order_id|default:"—" }}</p>
+                    <p><strong>Payment ID:</strong><br>{{ order.razorpay_payment_id|default:"—" }}</p>
+                    <p><strong>Signature:</strong><br>{{ order.razorpay_signature|default:"—" }}</p>
+                    <hr>
+                    <p><strong>Date:</strong> {{ order.created_at|date:"d M Y, h:i A" }}</p>
+                    <p><strong>Email:</strong> {{ order.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'my_orders' %}" class="btn btn-outline-dark">← Back to Orders</a>
+        <a href="{% url 'home' %}" class="btn btn-dark ms-2">Continue Shopping</a>
+    </div>
+</div>
+{% endblock %}

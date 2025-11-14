@@ -1,0 +1,65 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Checkout | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold text-center mb-4">Secure Checkout 💳</h2>
+
+    <div class="row g-4 justify-content-center">
+        <!-- Order Summary -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-dark text-light text-center fw-bold">
+                    🛍️ Order Summary
+                </div>
+                <div class="card-body">
+                    {% for item in items %}
+                        <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                            <div>
+                                <p class="mb-0 fw-semibold">{{ item.product.name }}</p>
+                                <small class="text-muted">Qty: {{ item.quantity }}</small>
+                            </div>
+                            <p class="mb-0 fw-bold text-primary">₹{{ item.get_subtotal }}</p>
+                        </div>
+                    {% endfor %}
+                    <hr>
+                    <p class="fw-bold d-flex justify-content-between">
+                        <span>Total:</span>
+                        <span class="text-primary">₹{{ total }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-dark text-light text-center fw-bold">
+                    🧾 Billing Details
+                </div>
+                <div class="card-body">
+                    <form id="checkout-form" method="post" action="{% url 'checkout' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" value="{{ user.get_full_name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value="{{ user.email }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Shipping Address</label>
+                            <textarea name="address" rows="3" class="form-control" placeholder="Enter your full address" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-dark btn-lg w-100 shadow-sm">Proceed to Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

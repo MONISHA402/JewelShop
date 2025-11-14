@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+{% block title %}Payment Successful | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <img src="{% static 'images/success.gif' %}" alt="Success" class="mb-4" style="max-width:180px;">
+    <h2 class="fw-bold text-success">Payment Successful!</h2>
+    <p class="lead text-muted">Thank you for shopping with <strong>Jewel Store</strong>.</p>
+    <p>Your order <strong>#{{ order.id }}</strong> has been confirmed and is being processed.</p>
+
+    <div class="mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-dark me-2">← Continue Shopping</a>
+        <a href="#" class="btn btn-dark">View Order Details</a>
+    </div>
+</div>
+{% endblock %}

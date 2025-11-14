@@ -1,0 +1,58 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }} | Jewel Store{% endblock %}
+
+{% block content %}
+
+<!-- Category Banner -->
+<div class="category-banner">
+    <div class="banner-content">
+        <h1>{{ category.name }}</h1>
+        <p>Explore our exclusive {{ category.name|lower }} collection.</p>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <h3>{{ category.name }}</h3>
+
+        <form method="get">
+            <label>Sort by:</label>
+            <select name="sort" onchange="this.form.submit()">
+                <option value="">Select</option>
+                <option value="low-to-high" {% if request.GET.sort == 'low-to-high' %}selected{% endif %}>Price: Low to High</option>
+                <option value="high-to-low" {% if request.GET.sort == 'high-to-low' %}selected{% endif %}>Price: High to Low</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- Products -->
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="{% static 'images/no-image.jpg' %}" alt="No image">
+            {% endif %}
+
+            <div class="product-info">
+                <h4>{{ product.name }}</h4>
+                <p class="desc">{{ product.description|truncatewords:10 }}</p>
+                <p class="price">₹{{ product.price }}</p>
+                <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success w-100"> Add To Cart</a>
+                <a href="{% url 'product_detail' product.slug %}" class="btn-details">View Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-product">No products found in this category.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

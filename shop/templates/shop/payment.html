@@ -1,0 +1,21 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+  <div class="checkout-container">
+    <h2>Payment Page</h2>
+    <p>Total Amount to Pay: ₹{{ total }}</p>
+
+    <form id="razorpay-form" method="POST" action="{% url 'paymenthandler' %}">
+      {% csrf_token %}
+      <script src="https://checkout.razorpay.com/v1/checkout.js"
+              data-key="{{ razorpay_merchant_key }}"
+              data-amount="{{ amount_paise }}"
+              data-currency="INR"
+              data-order_id="{{ razorpay_order_id }}"
+              data-buttontext="Pay with Razorpay"
+              data-name="Jewel Shop"
+              data-description="Order Payment"
+              data-theme.color="#528FF0">
+      </script>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ category.name }} - Jewel Shop</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>{{ category.name }}</h1>
+    {% if category.image %}
+        <img src="{{ category.image.url }}" alt="{{ category.name }}" style="width:300px; height:auto; margin-bottom: 20px;">
+    {% endif %}
+    <p>{{ category.description }}</p>
+    <a href="{% url 'home' %}">Back to Home</a>
+
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product_detail' product.slug %}">
+                    {{ product.name }} - ${{ product.price }}
+                    {% if product.image %}
+                      <br><img src="{{ product.image.url }}" width="100" />
+                    {% endif %}
+                </a>
+            </li>
+        {% empty %}
+            <li>No products found in this category.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

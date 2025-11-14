@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}{{ product.name }} | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row align-items-center">
+        <!-- Product Image -->
+        <div class="col-md-6 mb-4 mb-md-0 text-center">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow product-detail-img">
+            {% else %}
+                <img src="{% static 'images/no-image.jpg' %}" alt="No image" class="img-fluid rounded shadow product-detail-img">
+            {% endif %}
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-md-6">
+            <h2 class="fw-bold mb-3">{{ product.name }}</h2>
+            <p class="text-muted">{{ product.category.name }}</p>
+            <h3 class="text-primary mb-3">₹{{ product.price }}</h3>
+            <p class="text-secondary mb-4">{{ product.description }}</p>
+
+            {% if product.available %}
+                <form method="post" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-dark btn-lg w-100 shadow-sm">🛒 Add to Cart</button>
+                </form>
+            {% else %}
+                <button class="btn btn-secondary btn-lg w-100" disabled>Out of Stock</button>
+            {% endif %}
+
+            <hr class="my-4">
+
+            <div class="product-meta">
+                <p><strong>Stock:</strong> {{ product.stock }}</p>
+                <p><strong>Added:</strong> {{ product.created_at|date:"F j, Y" }}</p>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-dark w-100">← Back to Shop</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

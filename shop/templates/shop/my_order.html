@@ -1,0 +1,50 @@
+{% extends 'shop/base.html' %}
+{% block title %}My Orders | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold text-center mb-4">📦 My Orders</h2>
+
+    {% if orders %}
+        <div class="table-responsive shadow-sm">
+            <table class="table table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#Order ID</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"d M Y, h:i A" }}</td>
+                        <td>₹{{ order.total_amount }}</td>
+                        <td>
+                            {% if order.is_paid %}
+                                <span class="badge bg-success">Paid</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ order.email }}</td>
+                        <td>
+                            <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-outline-dark">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center text-muted">You have no orders yet.</p>
+        <div class="text-center mt-4">
+            <a href="{% url 'home' %}" class="btn btn-dark">Start Shopping</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

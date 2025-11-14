@@ -1,0 +1,33 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Login | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card shadow-lg">
+        <h2 class="fw-bold text-center mb-4">Welcome Back ✨</h2>
+        <p class="text-center text-muted mb-4">Login to continue shopping with <strong>Jewel Store</strong></p>
+
+        {% if error %}
+            <div class="alert alert-danger text-center">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Login</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            Don’t have an account? <a href="{% url 'signup' %}" class="text-decoration-none fw-bold">Sign up</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

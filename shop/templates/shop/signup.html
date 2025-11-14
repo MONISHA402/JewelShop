@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Sign Up | Jewel Store{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card shadow-lg">
+        <h2 class="fw-bold text-center mb-4">Create Account 💫</h2>
+        <p class="text-center text-muted mb-4">Join <strong>Jewel Store</strong> and explore exclusive jewelry!</p>
+
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-dark w-100 mt-2">Sign Up</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            Already have an account? <a href="{% url 'login' %}" class="text-decoration-none fw-bold">Login</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
